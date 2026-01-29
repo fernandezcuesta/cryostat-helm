@@ -38,7 +38,7 @@ spec:
       containers:
         {{- if (.Values.authentication.openshift).enabled }}
         {{- include "cryostat.openshiftOauthProxy" . | nindent 8 }}
-        {{- else }}
+        {{- else if .Values.oauth2Proxy.enabled }}
         {{- include "cryostat.oauth2Proxy" . | nindent 8 }}
         {{- end }}
         - name: {{ .Chart.Name }}

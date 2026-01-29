@@ -52,6 +52,9 @@ tests:
             app.kubernetes.io/part-of: cryostat
 
   - it: should validate all container settings including environment variables and security contexts
+    set:
+      oauth2Proxy:
+        enabled: true
     asserts:
       - exists:
           path: spec.template.spec.containers[?(@.name=='cryostat')]
@@ -376,6 +379,7 @@ tests:
   - it: should set oauth2proxy resource overrides
     set:
       oauth2Proxy:
+        enabled: true
         resources:
           limits:
             cpu: 4000m
@@ -575,6 +579,9 @@ tests:
               memory: 200Mi
 
   - it: should validate volumes and volume mounts
+    set:
+      oauth2Proxy:
+        enabled: true
     asserts:
       - lengthEqual:
           count: 1
@@ -586,7 +593,11 @@ tests:
 
   - it: should validate volumes and volume mounts with oauth2-proxy self-signed TLS enabled
     set:
-      oauth2Proxy.tls.selfSigned.enabled: true
+      oauth2Proxy:
+        enabled: true
+        tls:
+          selfSigned:
+            enabled: true
     asserts:
       - lengthEqual:
           count: 2
@@ -619,6 +630,7 @@ tests:
 
   - it: should configure the OAuth2 Proxy when OpenShift OAuth is disabled and OAuth2 is enabled
     set:
+      oauth2Proxy.enabled: true
       authentication.openshift.enabled: false
       authentication.oauth2.enabled: true
     asserts:
@@ -773,6 +785,7 @@ tests:
   - it: should verify image pull policies for development snapshots
     set:
       core.image.tag: "4.0.0-snapshot"
+      oauth2Proxy.enabled: true
     asserts:
       - equal:
           path: spec.template.spec.containers[?(@.name=='cryostat')].imagePullPolicy
@@ -795,6 +808,7 @@ tests:
       grafana.image.pullPolicy: "IfNotPresent"
       db.image.pullPolicy: "IfNotPresent"
       datasource.image.pullPolicy: "IfNotPresent"
+      oauth2Proxy.enabled: true
     asserts:
       - equal:
           path: spec.template.spec.containers[?(@.name=='cryostat')].imagePullPolicy
@@ -1208,6 +1222,8 @@ tests:
 
   - it: should set extra env vars and env sources for oauth2-proxy container
     set:
+      oauth2Proxy:
+        enabled: true
       oauth2Proxy.config.extra:
         envVars:
         - name: FOO

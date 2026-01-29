@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=values.schema.json
 ## @section Cryostat Container
 ## @extra core Configuration for the core Cryostat application
 core:
@@ -463,6 +464,8 @@ authentication:
 ## @section OAuth2 Proxy
 
 oauth2Proxy:
+  ## @param oauth2Proxy.enabled Whether an OAuth2 Proxy should be deployed alongside Cryostat for authentication and authorization
+  enabled: false
   image:
     ## @param oauth2Proxy.image.repository Repository for the OAuth2 Proxy container image
     repository: "quay.io/oauth2-proxy/oauth2-proxy"
@@ -510,6 +513,8 @@ oauth2Proxy:
 ## @section OpenShift OAuth Proxy
 
 openshiftOauthProxy:
+  ## @param openshiftOauthProxy.enabled Whether an OpenShift OAuth Proxy should be deployed alongside Cryostat for authentication and authorization
+  enabled: false
   image:
     ## @param openshiftOauthProxy.image.repository Repository for the OpenShift OAuth Proxy container image
     repository: "quay.io/openshift/origin-oauth-proxy"

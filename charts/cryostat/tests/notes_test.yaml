@@ -18,11 +18,11 @@ tests:
             - hosts:
                 - example.com
               secretName: example-tls
+      oauth2Proxy:
+        enabled: true
     asserts:
       - equalRaw:
           value: |
-
-
             1. Visit the application at:
               ```
               https://example.com/
@@ -35,7 +35,6 @@ tests:
     asserts:
       - equalRaw:
           value: |
-
             1. Configure the application to serve external traffic:
               ```
               No actions required with this configuration.
@@ -53,7 +52,6 @@ tests:
     asserts:
       - equalRaw:
           value: |
-
             1. Configure the application to serve external traffic:
               ```
               No actions required with this configuration.
@@ -72,7 +70,6 @@ tests:
     asserts:
       - equalRaw:
           value: |
-
             1. Configure the application to serve external traffic:
               ```
               export NODE_IP=$(kubectl get nodes -n NAMESPACE -o jsonpath="{.items[0].status.addresses[0].address}")
@@ -93,7 +90,6 @@ tests:
     asserts:
       - equalRaw:
           value: |
-
             1. Configure the application to serve external traffic:
               ```
                  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
@@ -110,13 +106,13 @@ tests:
   - it: should render correct notes for ClusterIP service without ingress or route and TLS enabled
     set:
       oauth2Proxy:
+        enabled: true
         tls:
           selfSigned:
             enabled: true
     asserts:
       - equalRaw:
           value: |
-
             1. Configure the application to serve external traffic:
               ```
               No actions required with this configuration.
@@ -144,7 +140,6 @@ tests:
     asserts:
       - equalRaw:
           value: |
-
             1. Configure the application to serve external traffic:
               ```
               No actions required with this configuration.
